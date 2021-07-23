@@ -1,5 +1,10 @@
 # Example of Stripe customer insights dashboard app
 You can see the lists of your customers on the example application.
+
+
+<img width="1256" alt="スクリーンショット 2021-07-24 1 26 54" src="https://user-images.githubusercontent.com/6883571/126812641-f1f9e5c1-455b-4a17-b5fe-187942e70725.png">
+
+
 The application will show...
 
 - Show the list of all customers
