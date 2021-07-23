@@ -23,6 +23,7 @@ export class AppController {
             payment_method_details,
             status,
             metadata,
+            paid,
           } = charge;
           return {
             amount,
@@ -32,6 +33,7 @@ export class AppController {
             payment_method_details,
             status,
             metadata,
+            paid,
           };
         })
     );
@@ -49,7 +51,7 @@ export class AppController {
         email,
         metadata,
         currency,
-        charges: this.formatChargeResponse(charges),
+        charges: charges ? this.formatChargeResponse(charges) : undefined,
       };
     });
     return response;
@@ -63,14 +65,33 @@ export class AppController {
     const data = await this.appService.listAllCharges();
     return this.formatChargeResponse(data);
   }
+  /**
+   * Load all Stripe charges
+   */
+  @Get('customers')
+  public async listCustomers() {
+    const data = await this.appService.listAllCustomers();
+    return this.formatCustomerResponse(data);
+  }
 
   /**
    *
    * Load all Stripe customer
    */
-  @Get('customers')
-  public async listCustomers() {
+  @Get('top_customers')
+  public async listTopCustomers() {
     const data = await this.appService.listAllCustomersWithCharge();
-    return this.formatCustomerResponse(data);
+    const withAmountPaid = this.formatCustomerResponse(data).map((customer) => {
+      const amountPaid = customer.charges.reduce((prev, current) => {
+        if (!current.paid) return prev;
+        return prev + current.amount;
+      }, 0);
+      return { ...customer, amountPaid };
+    });
+    const sortedCustoemr = withAmountPaid.sort((customerA, customerB) => {
+      return customerA.amountPaid > customerB.amountPaid ? -1 : 1;
+    });
+
+    return sortedCustoemr;
   }
 }

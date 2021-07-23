@@ -6,7 +6,7 @@ import { sequentialPromiseWithChunk } from '@hideokamoto/sequential-promise';
  * Stripe customer data with charge data
  */
 export interface CustomerWithCharge extends Stripe.Customer {
-  charges: Stripe.Charge[];
+  charges?: Stripe.Charge[];
 }
 
 @Injectable()
@@ -99,7 +99,7 @@ export class AppService {
           charges,
         };
       },
-      { chunkSize: Number(process.env.CHUNK_LOAD_SIZE) },
+      { chunkSize: Number(process.env.CHUNK_LOAD_SIZE || 7) },
     );
     return result.flat();
   }
