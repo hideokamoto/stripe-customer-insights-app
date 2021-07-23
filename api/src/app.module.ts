@@ -11,7 +11,7 @@ import { AppService } from './app.service';
       envFilePath: ['../.env', './.env'],
     }),
     CacheModule.register({
-      ttl: 1 * 60 * 60 * 60
+      ttl: 1 * 60 * 60 * 60,
     }),
   ],
   controllers: [AppController],
@@ -20,7 +20,7 @@ import { AppService } from './app.service';
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
-    }
+    },
   ],
 })
 export class AppModule {}
