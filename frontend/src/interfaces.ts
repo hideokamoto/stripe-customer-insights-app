@@ -2,6 +2,7 @@
  * The API response type
  */
 export interface StripeTOPCustomer {
+  email: string;
   amount_paid: number;
   currency?: string;
   created?: string;
