@@ -44,7 +44,8 @@ export class AppController {
    */
   public formatCustomerResponse(customers: CustomerWithCharge[]) {
     const response = customers.map((customer) => {
-      const { id, created, email, metadata, currency, charges } = customer;
+      const { id, created, email, metadata, currency, charges, name } =
+        customer;
       return {
         id,
         created,
@@ -52,6 +53,7 @@ export class AppController {
         metadata,
         currency,
         charges: charges ? this.formatChargeResponse(charges) : undefined,
+        name,
       };
     });
     return response;

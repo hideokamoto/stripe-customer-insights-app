@@ -2,7 +2,10 @@
 You can see the lists of your customers on the example application.
 The application will show...
 
-- Top 100 customers (amount paid)
+- Show the list of all customers
+- Sort by the amount paid, last charged date, and more.
+- Filter by name or company name on the metadata, or email address
+- Show the last charge status
 
 ## Requirement
 
@@ -148,38 +151,4 @@ You can now view frontend in the browser.
 
 Note that the development build is not optimized.
 To create a production build, use yarn build.
-```
-
-## Directory structure
-
-```.
-├── README.md
-├── api
-│   ├── README.md
-│   ├── nest-cli.json
-│   ├── package.json
-│   ├── src
-│   │   ├── app.controller.ts
-│   │   ├── app.module.ts
-│   │   ├── app.service.ts
-│   │   └── main.ts
-│   ├── tsconfig.build.json
-│   ├── tsconfig.json
-│   └── yarn.lock
-└── frontend
-    ├── README.md
-    ├── package.json
-    ├── public
-    ├── src
-    │   ├── App.tsx
-    │   ├── Table.tsx
-    │   ├── index.css
-    │   ├── index.tsx
-    │   ├── interfaces.ts
-    │   ├── react-app-env.d.ts
-    │   └── reportWebVitals.ts
-    ├── tsconfig.json
-    └── yarn.lock
-
-7 directories, 45 files
 ```

@@ -124,8 +124,9 @@ export function CustomerTable({
   const filteredCustomers = useMemo(() => {
     return customers.filter((customer) => {
       if (name) {
-        if (!customer.metadata || !customer.metadata.name) return false;
-        const result = new RegExp(`${name}`, "ig").test(customer.metadata.name);
+        const customerName = customer.name || customer.metadata?.name;
+        if (!customerName) return false;
+        const result = new RegExp(`${name}`, "ig").test(customerName);
         if (!result) return false;
         if (!company) return true;
       }
