@@ -86,10 +86,10 @@ export class AppController {
         if (!current.paid) return prev;
         return prev + current.amount;
       }, 0);
-      return { ...customer, amountPaid };
+      return { ...customer, amount_paid: amountPaid };
     });
     const sortedCustoemr = withAmountPaid.sort((customerA, customerB) => {
-      return customerA.amountPaid > customerB.amountPaid ? -1 : 1;
+      return customerA.amount_paid > customerB.amount_paid ? -1 : 1;
     });
 
     return sortedCustoemr;
