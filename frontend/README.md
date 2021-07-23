@@ -1,46 +1,63 @@
-# Getting Started with Create React App
+# Stripe Customer insight frontend application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Example customer insight application using React, react-table, and bootstrap.
 
-## Available Scripts
+## Requirement
 
-In the project directory, you can run:
+- Node v10+
 
-### `yarn start`
+### [Optional] Configure the `/front/.env` file
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+If you change the `API_PORT_NUMBER` or deployed the API to any hosting services like Heroku / AWS / GCP, you need to copy the `/front/.env.example` to `/front/.env`.
+You need to update these environment variables to fetch your running API.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+|Name|Used in|Description|Required (Default value)|
+|:--|:--|:--|:--|
+|REACT_APP_API_URL| Frontend | What the API should we call. | Not required ( default is `http://localhost:3100`) |
 
-### `yarn test`
+## Start React application (use Yarn)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+# Move to Frontend project directory
+cd front
 
-### `yarn build`
+# Install dependencies
+yarn
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Start the application
+yarn start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Compiled successfully!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+You can now view frontend in the browser.
 
-### `yarn eject`
+  Local:            http://localhost:3000
+  On Your Network:  http://192.168.86.000:3000
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Note that the development build is not optimized.
+To create a production build, use yarn build.
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Start React application (use npm)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Or you can use npm instead of Yarn.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+# Move to Frontend project directory
+cd front
 
-## Learn More
+# Install dependencies
+npm install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Start the API
+npm run start
+Compiled successfully!
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+You can now view frontend in the browser.
+
+  Local:            http://localhost:3000
+  On Your Network:  http://192.168.86.000:3000
+
+Note that the development build is not optimized.
+To create a production build, use yarn build.
+```

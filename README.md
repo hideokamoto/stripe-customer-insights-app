@@ -17,7 +17,7 @@ You need to get the following data or tools before starting the project.
 
 ### Step2: Put your Stripe API keys
 
-Rename `.env.example` to `.env`.
+Rename `api/.env.example` to `api/.env`.
 And open this file to put your Stripe API Key data.
 
 |Name|Used in|Description|Required (Default value)|
@@ -57,7 +57,7 @@ npm run start:dev
 You can test the API by the following command.
 
 ```bash
-% curl http://localhost:3100/customers | jq . | head -n 30
+% curl http://localhost:3100/top_customers | jq . | head -n 30
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 53727  100 53727    0     0  8744k      0 --:--:-- --:--:-- --:--:-- 8744k
@@ -148,4 +148,38 @@ You can now view frontend in the browser.
 
 Note that the development build is not optimized.
 To create a production build, use yarn build.
+```
+
+## Directory structure
+
+```.
+├── README.md
+├── api
+│   ├── README.md
+│   ├── nest-cli.json
+│   ├── package.json
+│   ├── src
+│   │   ├── app.controller.ts
+│   │   ├── app.module.ts
+│   │   ├── app.service.ts
+│   │   └── main.ts
+│   ├── tsconfig.build.json
+│   ├── tsconfig.json
+│   └── yarn.lock
+└── frontend
+    ├── README.md
+    ├── package.json
+    ├── public
+    ├── src
+    │   ├── App.tsx
+    │   ├── Table.tsx
+    │   ├── index.css
+    │   ├── index.tsx
+    │   ├── interfaces.ts
+    │   ├── react-app-env.d.ts
+    │   └── reportWebVitals.ts
+    ├── tsconfig.json
+    └── yarn.lock
+
+7 directories, 45 files
 ```
