@@ -61,17 +61,10 @@ export function CustomerTable({
             Header: "Amount paid",
             accessor: (d: StripeTOPCustomer) => {
               const amountPaid = d.amount_paid;
-              const currency = (() => {
-                if (d.currency) return d.currency;
-                const charge = d.charges ? d.charges[0] : null;
-                if (!charge) return "";
-                return charge.currency;
-              })();
-              if (!amountPaid)
-                return `${amountPaid} ${currency?.toLocaleUpperCase()}`;
-              return `${amountPaid.toLocaleString()} ${currency?.toLocaleUpperCase()}`;
+              return amountPaid;
             },
-            Cell: ({ value }: any) => value,
+            Cell: ({ value }: any): string =>
+              `${value ? value.toLocaleString() : 0} USD`,
           },
           {
             Header: "Created",
