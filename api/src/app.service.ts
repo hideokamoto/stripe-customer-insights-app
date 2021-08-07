@@ -31,18 +31,17 @@ export class AppService {
     startingAfter?: string,
     prevCustomers: Stripe.Customer[] = [],
   ): Promise<Stripe.Customer[]> {
-    const customers = await this.stripe.customers.list({
-      limit: 100,
-      starting_after: startingAfter,
-    });
-    const merged = [...prevCustomers, ...customers.data];
-    if (customers.data.length < 100) {
+    const customers = await this.stripe.customers
+      .list({
+        limit: 100,
+        starting_after: startingAfter,
+      })
+      .autoPagingToArray({ limit: 10000 });
+    const merged = [...prevCustomers, ...customers];
+    if (customers.length < 10000) {
       return merged;
     }
-    return this.listAllCustomers(
-      customers.data[customers.data.length - 1].id,
-      merged,
-    );
+    return this.listAllCustomers(customers[customers.length - 1].id, merged);
   }
 
   /**
@@ -56,7 +55,9 @@ export class AppService {
     params?: Stripe.ChargeListParams,
     options?: Stripe.RequestOptions,
   ) {
-    const { data } = await this.stripe.charges.list(params, options);
+    const data = await this.stripe.charges
+      .list(params, options)
+      .autoPagingToArray({ limit: 10000 });
     return data;
   }
 
@@ -78,7 +79,7 @@ export class AppService {
       starting_after: startingAfter,
     });
     const merged = [...prevCharges, ...charges];
-    if (charges.length < 100) {
+    if (charges.length < 10000) {
       return merged;
     }
     return this.listAllCharges(params, charges[charges.length - 1].id, merged);
@@ -99,7 +100,7 @@ export class AppService {
           charges,
         };
       },
-      { chunkSize: Number(process.env.CHUNK_LOAD_SIZE || 7) },
+      { chunkSize: Number(process.env.CHUNK_LOAD_SIZE || 14) },
     );
     return result.flat();
   }
