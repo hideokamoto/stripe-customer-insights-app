@@ -1,18 +1,58 @@
-# Example of Stripe customer insights dashboard app
-You can see the lists of your customers on the example application.
+# Stripe Customer Insights Dashboard App
 
+> **🎉 NEW: Stripe Apps Version Available!**
+> This repository now includes a modern Stripe Apps version with native Stripe Dashboard integration.
+> See the [`stripe-app/`](./stripe-app) directory for the new implementation.
+
+You can see the lists of your customers on the example application.
 
 <img width="1256" alt="スクリーンショット 2021-07-24 1 26 54" src="https://user-images.githubusercontent.com/6883571/126812641-f1f9e5c1-455b-4a17-b5fe-187942e70725.png">
 
-
-The application will show...
+## Features
 
 - Show the list of all customers
-- Sort by the amount paid, last charged date, and more.
+- Sort by the amount paid, last charged date, and more
 - Filter by name or company name on the metadata, or email address
 - Show the last charge status
 
-## Requirement
+## 📦 Two Versions Available
+
+### 🆕 Stripe Apps Version (Recommended)
+**Location:** [`stripe-app/`](./stripe-app)
+
+**Benefits:**
+- ✅ Native Stripe Dashboard integration
+- ✅ No backend server required
+- ✅ Zero infrastructure costs
+- ✅ Stripe-managed authentication and security
+- ✅ Modern TypeScript + React 18
+- ✅ Stripe UI Extension SDK
+
+**Tech Stack:**
+- Stripe Apps Platform
+- TypeScript
+- React 18
+- Stripe UI Extension SDK
+
+👉 **[Get Started with Stripe Apps Version →](./stripe-app/README.md)**
+
+### 🔧 Legacy Version (NestJS + React)
+**Location:** `api/` and `frontend/`
+
+**Tech Stack:**
+- Backend: NestJS + TypeScript
+- Frontend: React 17 + React Bootstrap
+- Requires separate hosting
+
+**Note:** This version is maintained for reference but the Stripe Apps version is recommended for new deployments.
+
+---
+
+## 🔧 Legacy Version Setup (NestJS + React)
+
+> **Note:** The Stripe Apps version is recommended for new projects. This section documents the legacy standalone version.
+
+### Requirement
 
 You need to get the following data or tools before starting the project.
 
