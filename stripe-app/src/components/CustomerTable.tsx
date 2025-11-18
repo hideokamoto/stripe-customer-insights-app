@@ -27,13 +27,10 @@ const formatDate = (timestamp: number): string => {
 };
 
 /**
- * Format amount to USD
+ * Format amount to USD (amount is in cents, same as original implementation)
  */
 const formatAmount = (amount: number): string => {
-  return `$${amount.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+  return `${amount ? amount.toLocaleString() : 0} USD`;
 };
 
 /**

@@ -7,7 +7,7 @@ export interface CustomerWithInsights {
   id: string;
   name?: string;
   email: string;
-  amount_paid: number;
+  amount_paid: number; // Amount in cents (not converted to dollars)
   currency?: string;
   created: number;
   charges: Stripe.Charge[];

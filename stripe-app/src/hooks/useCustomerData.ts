@@ -13,11 +13,12 @@ export function useCustomerData() {
 
   /**
    * Calculate total amount paid by customer from charges
+   * Returns the amount in cents (same as original implementation)
    */
   const calculateAmountPaid = (charges: Stripe.Charge[]): number => {
     return charges
-      .filter((charge) => charge.paid && charge.status === 'succeeded')
-      .reduce((total, charge) => total + charge.amount, 0) / 100; // Convert from cents to dollars
+      .filter((charge) => charge.paid)
+      .reduce((total, charge) => total + charge.amount, 0);
   };
 
   /**
@@ -40,7 +41,7 @@ export function useCustomerData() {
       const customersWithInsights: CustomerWithInsights[] = [];
 
       // Process customers in chunks to avoid rate limiting
-      const chunkSize = 10;
+      const chunkSize = 14;
       for (let i = 0; i < allCustomers.length; i += chunkSize) {
         const chunk = allCustomers.slice(i, i + chunkSize);
 
