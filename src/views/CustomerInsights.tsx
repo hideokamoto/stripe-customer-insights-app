@@ -24,28 +24,29 @@ export const CustomerInsights = () => {
   });
 
   /**
-   * Filter customers based on search criteria
+   * Filter customers based on search criteria (case-insensitive substring matching)
    */
   const filteredCustomers = useMemo(() => {
     return customers.filter((customer) => {
-      // Filter by name
+      // Filter by name (safe substring matching)
       if (filters.name) {
-        const customerName = customer.name || customer.metadata?.name || '';
-        const nameMatch = new RegExp(filters.name, 'gi').test(customerName);
-        if (!nameMatch) return false;
+        const customerName = (customer.name || customer.metadata?.name || '').toLowerCase();
+        const searchName = filters.name.toLowerCase();
+        if (!customerName.includes(searchName)) return false;
       }
 
-      // Filter by company
+      // Filter by company (safe substring matching)
       if (filters.company) {
-        const company = customer.metadata?.company || '';
-        const companyMatch = new RegExp(filters.company, 'gi').test(company);
-        if (!companyMatch) return false;
+        const company = (customer.metadata?.company || '').toLowerCase();
+        const searchCompany = filters.company.toLowerCase();
+        if (!company.includes(searchCompany)) return false;
       }
 
-      // Filter by email
+      // Filter by email (safe substring matching)
       if (filters.email) {
-        const emailMatch = new RegExp(filters.email, 'gi').test(customer.email);
-        if (!emailMatch) return false;
+        const email = customer.email.toLowerCase();
+        const searchEmail = filters.email.toLowerCase();
+        if (!email.includes(searchEmail)) return false;
       }
 
       return true;

@@ -27,10 +27,11 @@ const formatDate = (timestamp: number): string => {
 };
 
 /**
- * Format amount to USD (amount is in cents, same as original implementation)
+ * Format amount with currency (amount is in cents, same as original implementation)
  */
-const formatAmount = (amount: number): string => {
-  return `${amount ? amount.toLocaleString() : 0} USD`;
+const formatAmount = (amount: number, currency?: string): string => {
+  const currencyCode = (currency || 'usd').toUpperCase();
+  return `${amount ? amount.toLocaleString() : 0} ${currencyCode}`;
 };
 
 /**
@@ -60,8 +61,8 @@ export function CustomerTable({ customers }: CustomerTableProps) {
     const sorted = [...customers];
 
     sorted.sort((a, b) => {
-      let aValue: any;
-      let bValue: any;
+      let aValue: string | number;
+      let bValue: string | number;
 
       switch (sortConfig.key) {
         case 'email':
@@ -72,7 +73,7 @@ export function CustomerTable({ customers }: CustomerTableProps) {
           aValue = a.metadata?.company || '';
           bValue = b.metadata?.company || '';
           break;
-        case 'customerName':
+        case 'name':
           aValue = a.metadata?.name || a.name || '';
           bValue = b.metadata?.name || b.name || '';
           break;
@@ -85,6 +86,7 @@ export function CustomerTable({ customers }: CustomerTableProps) {
           bValue = b.created;
           break;
         case 'lastOrderDate':
+          // charges[0] is the most recent charge because useCustomerData sorts charges by created descending
           aValue = a.charges[0]?.created || 0;
           bValue = b.charges[0]?.created || 0;
           break;
@@ -123,8 +125,8 @@ export function CustomerTable({ customers }: CustomerTableProps) {
             <TableHeader onClick={() => handleSort('company')}>
               Company{getSortIndicator('company')}
             </TableHeader>
-            <TableHeader onClick={() => handleSort('customerName')}>
-              Name{getSortIndicator('customerName')}
+            <TableHeader onClick={() => handleSort('name')}>
+              Name{getSortIndicator('name')}
             </TableHeader>
             <TableHeader>Customer Source</TableHeader>
             <TableHeader onClick={() => handleSort('amount_paid')}>
@@ -155,7 +157,7 @@ export function CustomerTable({ customers }: CustomerTableProps) {
                 <TableCell>{company}</TableCell>
                 <TableCell>{customerName}</TableCell>
                 <TableCell>{customerSource}</TableCell>
-                <TableCell>{formatAmount(customer.amount_paid)}</TableCell>
+                <TableCell>{formatAmount(customer.amount_paid, customer.currency)}</TableCell>
                 <TableCell>{formatDate(customer.created)}</TableCell>
                 <TableCell>
                   {lastCharge ? formatDate(lastCharge.created) : '-'}

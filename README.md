@@ -26,10 +26,18 @@ A Stripe App that provides customer payment insights and analytics directly with
 
 ## Installation
 
-### 1. Install Stripe Apps CLI
+### 1. Install Stripe CLI and Apps Plugin
 
+The Stripe Apps CLI is a plugin for the Stripe CLI (requires Stripe CLI >= 1.8.11).
+
+**Install Stripe CLI:**
+- **macOS (Homebrew)**: `brew install stripe/stripe-cli/stripe`
+- **Linux**: Download from [Stripe CLI releases](https://github.com/stripe/stripe-cli/releases/latest)
+- **Windows**: Download from [Stripe CLI releases](https://github.com/stripe/stripe-cli/releases/latest)
+
+**Install the Apps plugin:**
 ```bash
-npm install -g @stripe/stripe-apps-cli
+stripe plugin install apps
 ```
 
 ### 2. Install Dependencies
@@ -38,11 +46,13 @@ npm install -g @stripe/stripe-apps-cli
 npm install
 ```
 
-### 3. Authenticate with Stripe
+### 3. Authenticate Stripe CLI
 
 ```bash
 stripe login
 ```
+
+This will open your browser to authenticate with your Stripe account.
 
 ## Development
 

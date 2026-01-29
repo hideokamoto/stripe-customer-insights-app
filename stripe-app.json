@@ -12,10 +12,6 @@
     {
       "permission": "charge_read",
       "purpose": "Show payment charges for each customer"
-    },
-    {
-      "permission": "payment_intent_read",
-      "purpose": "Access payment intent information"
     }
   ],
   "ui_extension": {

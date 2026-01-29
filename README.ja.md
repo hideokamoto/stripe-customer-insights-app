@@ -35,7 +35,6 @@ npm install -g @stripe/stripe-apps-cli
 ### 2. 依存関係のインストール
 
 ```bash
-cd stripe-app
 npm install
 ```
 
@@ -68,8 +67,8 @@ npm run build
 
 ## プロジェクト構造
 
-```
-stripe-app/
+```plaintext
+stripe-customer-insights-app/
 ├── stripe-app.json       # アプリマニフェスト
 ├── package.json          # 依存関係
 ├── tsconfig.json         # TypeScript設定

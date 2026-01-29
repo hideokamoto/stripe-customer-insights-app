@@ -32,16 +32,16 @@ export interface CustomerFilters {
  * Sort configuration
  */
 export interface SortConfig {
-  key: keyof CustomerWithInsights | 'company' | 'customerName' | 'lastOrderDate';
+  key: keyof CustomerWithInsights | 'company' | 'lastOrderDate';
   direction: 'asc' | 'desc';
 }
 
 /**
  * Customer table column definition
  */
-export interface CustomerColumn {
+export interface CustomerColumn<T = string | number> {
   header: string;
-  accessor: (customer: CustomerWithInsights) => string | number;
+  accessor: (customer: CustomerWithInsights) => T;
   sortable?: boolean;
-  formatter?: (value: any) => string;
+  formatter?: (value: T) => string;
 }

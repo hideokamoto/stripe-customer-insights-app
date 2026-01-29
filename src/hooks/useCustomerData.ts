@@ -24,7 +24,7 @@ export function useCustomerData() {
   /**
    * Fetch all customers with their charge data
    */
-  const fetchCustomers = useCallback(async () => {
+  const fetchCustomers = useCallback(async (signal?: AbortSignal) => {
     setLoading(true);
     setError(null);
 
@@ -32,8 +32,10 @@ export function useCustomerData() {
       const stripe = createStripeClient(STRIPE_API_KEY);
 
       // Fetch all customers (with auto-pagination)
+      // TODO: For large accounts (10k+ customers), implement pagination with cursor-based loading
       const allCustomers: Stripe.Customer[] = [];
       for await (const customer of stripe.customers.list({ limit: 100 })) {
+        if (signal?.aborted) return;
         allCustomers.push(customer);
       }
 
@@ -41,18 +43,22 @@ export function useCustomerData() {
       const customersWithInsights: CustomerWithInsights[] = [];
 
       // Process customers in chunks to avoid rate limiting
+      // Chunk size of 14 chosen to stay within Stripe's rate limit (25 requests/second in live mode)
       const chunkSize = 14;
       for (let i = 0; i < allCustomers.length; i += chunkSize) {
         const chunk = allCustomers.slice(i, i + chunkSize);
 
         const chunkPromises = chunk.map(async (customer) => {
           try {
+            if (signal?.aborted) return null;
+
             // Fetch charges for this customer
             const charges: Stripe.Charge[] = [];
             for await (const charge of stripe.charges.list({
               customer: customer.id,
               limit: 100,
             })) {
+              if (signal?.aborted) return null;
               charges.push(charge);
             }
 
@@ -69,7 +75,9 @@ export function useCustomerData() {
               charges,
               metadata: {
                 company: customer.metadata?.company,
-                vip: customer.metadata?.vip as 'true' | 'false' | undefined,
+                vip: customer.metadata?.vip === 'true' || customer.metadata?.vip === 'false'
+                  ? customer.metadata.vip
+                  : undefined,
                 name: customer.metadata?.name,
                 customer_source: customer.metadata?.customer_source,
               },
@@ -88,7 +96,9 @@ export function useCustomerData() {
               charges: [],
               metadata: {
                 company: customer.metadata?.company,
-                vip: customer.metadata?.vip as 'true' | 'false' | undefined,
+                vip: customer.metadata?.vip === 'true' || customer.metadata?.vip === 'false'
+                  ? customer.metadata.vip
+                  : undefined,
                 name: customer.metadata?.name,
                 customer_source: customer.metadata?.customer_source,
               },
@@ -97,10 +107,12 @@ export function useCustomerData() {
         });
 
         const chunkResults = await Promise.all(chunkPromises);
-        customersWithInsights.push(...chunkResults);
+        const validResults = chunkResults.filter((r): r is CustomerWithInsights => r !== null);
+        customersWithInsights.push(...validResults);
 
         // Small delay between chunks to avoid rate limiting
         if (i + chunkSize < allCustomers.length) {
+          if (signal?.aborted) return;
           await new Promise((resolve) => setTimeout(resolve, 100));
         }
       }
@@ -108,8 +120,10 @@ export function useCustomerData() {
       // Sort by amount paid (descending)
       customersWithInsights.sort((a, b) => b.amount_paid - a.amount_paid);
 
-      setCustomers(customersWithInsights);
-      setLoading(false);
+      if (!signal?.aborted) {
+        setCustomers(customersWithInsights);
+        setLoading(false);
+      }
     } catch (err) {
       console.error('Failed to fetch customer data:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch customer data');
@@ -124,9 +138,14 @@ export function useCustomerData() {
     fetchCustomers();
   }, [fetchCustomers]);
 
-  // Initial fetch
+  // Initial fetch with cleanup
   useEffect(() => {
-    fetchCustomers();
+    const controller = new AbortController();
+    fetchCustomers(controller.signal);
+
+    return () => {
+      controller.abort();
+    };
   }, [fetchCustomers]);
 
   return {

@@ -37,21 +37,18 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
           placeholder="Enter email address"
           value={filters.email}
           onChange={(e) => handleEmailChange(e.target.value)}
-          state={filters.email ? 'default' : 'default'}
         />
         <TextField
           label="Search by name"
           placeholder="Enter customer name"
           value={filters.name}
           onChange={(e) => handleNameChange(e.target.value)}
-          state={filters.name ? 'default' : 'default'}
         />
         <TextField
           label="Search by company"
           placeholder="Enter company name"
           value={filters.company}
           onChange={(e) => handleCompanyChange(e.target.value)}
-          state={filters.company ? 'default' : 'default'}
         />
       </Inline>
     </Box>
