@@ -1,0 +1,29 @@
+{
+  "id": "com.stripe.customer-insights",
+  "version": "1.0.0",
+  "name": "Customer Insights",
+  "description": "Visualize customer payment history and insights directly in Stripe Dashboard",
+  "icon": "./icon.svg",
+  "permissions": [
+    {
+      "permission": "customer_read",
+      "purpose": "Display customer data and payment history"
+    },
+    {
+      "permission": "charge_read",
+      "purpose": "Show payment charges for each customer"
+    }
+  ],
+  "ui_extension": {
+    "views": [
+      {
+        "viewport": "stripe.dashboard.home.overview",
+        "component": "CustomerInsights"
+      }
+    ],
+    "content_security_policy": {
+      "connect-src": ["https://api.stripe.com"],
+      "image-src": null
+    }
+  }
+}

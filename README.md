@@ -1,159 +1,206 @@
-# Example of Stripe customer insights dashboard app
-You can see the lists of your customers on the example application.
+# Stripe Customer Insights App
 
+A Stripe App that provides customer payment insights and analytics directly within the Stripe Dashboard.
 
-<img width="1256" alt="スクリーンショット 2021-07-24 1 26 54" src="https://user-images.githubusercontent.com/6883571/126812641-f1f9e5c1-455b-4a17-b5fe-187942e70725.png">
+## Features
 
+- 📊 **Customer Analytics**: View all customers with their payment history and insights
+- 💰 **Payment Tracking**: See total amount paid by each customer
+- 🔍 **Advanced Filtering**: Search customers by email, name, or company
+- 📈 **Sorting**: Sort customers by various metrics (amount paid, date, etc.)
+- ⚡ **Real-time Data**: Fetch latest customer data directly from Stripe API
+- 🎯 **Dashboard Integration**: Native integration with Stripe Dashboard
 
-The application will show...
+## Technology Stack
 
-- Show the list of all customers
-- Sort by the amount paid, last charged date, and more.
-- Filter by name or company name on the metadata, or email address
-- Show the last charge status
+- **Framework**: Stripe Apps Platform (UI Extensions)
+- **Language**: TypeScript
+- **UI Library**: Stripe UI Extension SDK
+- **API**: Stripe API (Customers, Charges)
 
-## Requirement
+## Prerequisites
 
-You need to get the following data or tools before starting the project.
+- Node.js >= 18.0.0
+- Stripe account with API access
+- Stripe Apps CLI
 
-- Stripe API keys
-- Node v10+
+## Installation
 
-## Getting started
+### 1. Install Stripe CLI and Apps Plugin
 
-### Step1: Clone the repository
+The Stripe Apps CLI is a plugin for the Stripe CLI (requires Stripe CLI >= 1.8.11).
 
-### Step2: Put your Stripe API keys
+**Install Stripe CLI:**
+- **macOS (Homebrew)**: `brew install stripe/stripe-cli/stripe`
+- **Linux**: Download from [Stripe CLI releases](https://github.com/stripe/stripe-cli/releases/latest)
+- **Windows**: Download from [Stripe CLI releases](https://github.com/stripe/stripe-cli/releases/latest)
 
-Rename `api/.env.example` to `api/.env`.
-And open this file to put your Stripe API Key data.
-
-|Name|Used in|Description|Required (Default value)|
-|:--|:--|:--|:--|
-|STRIPE_SECRET_API_KEY|API|Stripe API key like sk_test_YOUR_API_KEY. | Required |
-|CHUNK_LOAD_SIZE|API| To avoid Stripe API throttling, create a chunk to call API sequentially.|Not Required (default is `7`)|
-|API_PORT_NUMBER|API|Select the API port number|Not required (default is `3100`)|
-
-### STEP3: Setup the API
-
+**Install the Apps plugin:**
 ```bash
-# Move to API project directory
-cd api
-
-# Install dependencies
-yarn
-
-# Start the API
-yarn start:dev
+stripe plugin install apps
 ```
 
-#### use npm instead
+### 2. Install Dependencies
 
 ```bash
-# Move to API project directory
-cd api
-
-# Install dependencies
 npm install
-
-# Start the API
-npm run start:dev
 ```
 
-#### Check the API response by using cURL
-
-You can test the API by the following command.
+### 3. Authenticate Stripe CLI
 
 ```bash
-% curl http://localhost:3100/top_customers | jq . | head -n 30
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 53727  100 53727    0     0  8744k      0 --:--:-- --:--:-- --:--:-- 8744k
-[
-  {
-    "id": "cus_Cemxxxxxxxxxxx",
-    "created": 1523390097,
-    "email": "methodologies@example.com",
-    "metadata": {
-      "customer_source": "product_hunt"
-    },
-    "currency": "usd"
-  },
-  {
-    "id": "cus_Cemxxxxxxxxxxx",
-    "created": 1523390097,
-    "email": "IntelligentPlasticPizza@example.com",
-    "metadata": {
-      "customer_source": "twitter",
-      "vip": "true",
-      "company": "IBM"
-    },
-    "currency": null
-  },
-  {
-    "id": "cus_Cemxxxxxxxxxxx",
-    "created": 1523390097,
-    "email": "SQL@example.org",
-    "metadata": {
-      "customer_source": "mailing_list"
-    },
-    "currency": null
+stripe login
 ```
 
-### STEP4: Launch React application
+This will open your browser to authenticate with your Stripe account.
 
-In the `front` directory, we can run React application to visualize the customer data that get from the API.
+## Development
 
-#### [Optional] Configure the `/front/.env` file
-
-If you change the `API_PORT_NUMBER` or deployed the API to any hosting services like Heroku / AWS / GCP, you need to copy the `/front/.env.example` to `/front/.env`.
-You need to update these environment variables to fetch your running API.
-
-|Name|Used in|Description|Required (Default value)|
-|:--|:--|:--|:--|
-|REACT_APP_API_URL| Frontend | What the API should we call. | Not required ( default is `http://localhost:3100`) |
-
-#### Start React application
+### Start Development Server
 
 ```bash
-# Move to Frontend project directory
-cd front
-
-# Install dependencies
-yarn
-
-# Start the application
-yarn start
-
-Compiled successfully!
-
-You can now view frontend in the browser.
-
-  Local:            http://localhost:3000
-  On Your Network:  http://192.168.86.000:3000
-
-Note that the development build is not optimized.
-To create a production build, use yarn build.
+npm start
+# or
+stripe apps start
 ```
 
-Or you can use npm instead of Yarn.
+This will:
+1. Build the app in watch mode
+2. Start a local development server
+3. Open the app in your Stripe Dashboard (test mode)
+
+### Build for Production
 
 ```bash
-# Move to Frontend project directory
-cd front
-
-# Install dependencies
-npm install
-
-# Start the API
-npm run start
-Compiled successfully!
-
-You can now view frontend in the browser.
-
-  Local:            http://localhost:3000
-  On Your Network:  http://192.168.86.000:3000
-
-Note that the development build is not optimized.
-To create a production build, use yarn build.
+npm run build
 ```
+
+## Project Structure
+
+```
+stripe-customer-insights-app/
+├── stripe-app.json       # App manifest
+├── package.json          # Dependencies
+├── tsconfig.json         # TypeScript configuration
+├── icon.svg              # App icon
+├── README.md             # Documentation (English)
+├── README.ja.md          # Documentation (Japanese)
+└── src/
+    ├── views/
+    │   └── CustomerInsights.tsx    # Main view component
+    ├── components/
+    │   ├── CustomerTable.tsx       # Customer table component
+    │   └── FilterBar.tsx           # Filter bar component
+    ├── hooks/
+    │   └── useCustomerData.ts      # Custom hook for data fetching
+    └── types/
+        └── customer.ts             # TypeScript type definitions
+```
+
+## Usage
+
+Once installed, the Customer Insights app will appear in your Stripe Dashboard:
+
+1. Navigate to your Stripe Dashboard
+2. Look for "Customer Insights" in the Apps section
+3. Click to open the app
+4. View customer data with payment insights
+5. Use filters to search for specific customers
+6. Click column headers to sort data
+
+### Features in Detail
+
+#### Customer Table
+- **Email**: Customer email address
+- **Company**: Company name from metadata
+- **Name**: Customer name
+- **Customer Source**: Source tracking from metadata
+- **Amount Paid**: Total amount paid (in USD)
+- **Created**: Customer creation date
+- **Last Order Date**: Date of most recent charge
+- **Last Order Status**: Status of most recent charge
+- **Last Ordered Item**: Description of most recent charge
+
+#### Filtering
+- Search by customer email
+- Search by customer name
+- Search by company name
+- Filters work together (AND logic)
+
+#### Sorting
+- Click any column header to sort
+- Click again to reverse sort direction
+- Sort indicators show current sort column and direction
+
+## Deployment
+
+### Upload to Stripe
+
+```bash
+stripe apps upload
+```
+
+### Submit to Stripe App Marketplace (Optional)
+
+```bash
+stripe apps submit
+```
+
+## Permissions
+
+This app requires the following Stripe permissions:
+
+- `customer_read`: To read customer data
+- `charge_read`: To read payment charges
+- `payment_intent_read`: To access payment intent information
+
+## Architecture
+
+This is a **Stripe Apps** implementation - a frontend-only application that runs directly in the Stripe Dashboard:
+
+- ✅ No backend server required
+- ✅ Hosted by Stripe (zero infrastructure costs)
+- ✅ Stripe-managed authentication and security
+- ✅ Native Stripe Dashboard integration
+- ✅ Automatic updates and scaling
+
+> **Note**: A legacy version (NestJS backend + React frontend) is preserved in the `legacy` branch for reference.
+
+## Troubleshooting
+
+### App not loading in Dashboard
+- Make sure you're in test mode
+- Check that `stripe apps start` is running
+- Verify your Stripe CLI is authenticated
+
+### Data not appearing
+- Check Stripe API permissions in `stripe-app.json`
+- Verify you have customers in your test account
+- Check browser console for errors
+
+### Build errors
+- Run `npm install` to ensure all dependencies are installed
+- Check Node.js version (must be >= 18.0.0)
+- Verify TypeScript configuration
+
+## License
+
+MIT
+
+## Support
+
+For issues or questions:
+- Check the [Stripe Apps documentation](https://stripe.com/docs/stripe-apps)
+- Review the code comments for implementation details
+- Open an issue in this repository
+
+## Future Enhancements
+
+Potential features for future versions:
+- Customer segmentation and cohorts
+- Revenue analytics charts
+- Export to CSV functionality
+- Customer lifetime value calculation
+- Payment method insights
+- Refund tracking
+- Subscription analytics (if using Stripe Billing)
